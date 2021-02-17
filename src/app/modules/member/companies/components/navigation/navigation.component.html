@@ -1,0 +1,37 @@
+<div id="admin-navigation-container">
+  <mat-accordion>
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title> იდეები </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div id="idea-pages">
+        <a
+          mat-button
+          routerLinkActive="activeLink"
+          routerLink="/admin/idea-new"
+          class="status-text"
+        >
+          <span>ახალი</span>
+        </a>
+        <a
+          mat-button
+          routerLinkActive="activeLink"
+          routerLink="/admin/idea-defected"
+          class="status-text"
+        >
+          <span>დახარვეზებული </span></a
+        >
+        <a
+          mat-button
+          routerLinkActive="activeLink"
+          routerLink="/admin/idea-in-discussion"
+          class="status-text"
+        >
+          <span
+            >განხილვაში</span
+          ></a
+        >
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
