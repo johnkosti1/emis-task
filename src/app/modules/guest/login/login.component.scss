@@ -1,0 +1,19 @@
+.mat-card {
+  margin: auto;
+  margin-top: 15px;
+  width: 600px;
+
+  form {
+      display: flex;
+      flex-direction: column;
+      margin: 20px 0;
+
+      .messages {
+          padding: 0 0 20px 0;
+
+          span {
+              color: red;
+          }
+      }
+  }
+}

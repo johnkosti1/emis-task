@@ -1,0 +1,57 @@
+<div class="institution" *ngIf="institution | async; let institution">
+  <mat-card>
+    <p>დაწესებულების სახელი: {{ institution.name }}</p>
+    <p>საიდენტიფიკაციო კოდი: {{ institution.pid }}</p>
+    <p>საკონტაქტო ნომერი: {{ institution.number }}</p>
+  </mat-card>
+</div>
+<hr />
+<div class="create-button">
+  <button (click)="createBranchDialog()" mat-raised-button>
+    ფილიალის შექმნა
+  </button>
+</div>
+<mat-card>
+  <table mat-table [dataSource]="dataSource | async">
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>ფილიალის მისამართი</th>
+      <td mat-cell class="linked" *matCellDef="let element">
+        {{ element.address }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="manager_name">
+      <th mat-header-cell *matHeaderCellDef>მენეჯერის სახელი</th>
+      <td mat-cell class="linked" *matCellDef="let element">
+        {{ element.manager_name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell class="linked" *matCellDef="let element">
+        <button
+          (click)="editBrancheDialog($event, element.id)"
+          mat-icon-button
+          aria-label="Example icon button with a home icon"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="navigateToCurrentBranch(row)"
+      class="branches-row"
+    ></tr>
+  </table>
+  <mat-paginator
+    [length]="page.total"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="pageEvent($event)"
+  >
+  </mat-paginator>
+</mat-card>

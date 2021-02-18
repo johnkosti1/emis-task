@@ -1,0 +1,45 @@
+<div class="create-inst" *ngIf="institutionForm">
+  <div class="header">დაწესებულების შექმნა</div>
+  <form [formGroup]="institutionForm" class="create-inst-form">
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="საინდენტიფიკაციო კოდი"
+        formControlName="pid"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="დასახელება"
+        formControlName="name"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="საკონტაქტო ნომერი"
+        formControlName="number"
+      />
+    </mat-form-field>
+  </form>
+  <div class="actions">
+    <button
+      (click)="submit()"
+      class="submit-button"
+      style="margin-right: 15px"
+      mat-raised-button
+    >
+      დაწესებულების {{ data && data.id ? "რედაქტირება" : "დამატება" }}
+    </button>
+    <button (click)="closeDialog()" color="warn" mat-raised-button>
+      გაუქმება
+    </button>
+  </div>
+</div>

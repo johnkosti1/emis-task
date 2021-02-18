@@ -1,0 +1,100 @@
+<h1>დაწესებულებები</h1>
+<div class="search">
+  <form
+    class="search-form"
+    #NewUserForm="ngForm"
+    (submit)="searchInstitutions(NewUserForm)"
+  >
+    <mat-form-field>
+      <input
+        name="pid"
+        #pid="ngModel"
+        [(ngModel)]="searchForm.pid"
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="საინდენტიფიკაციო კოდი"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        name="name"
+        #name="ngModel"
+        [(ngModel)]="searchForm.name"
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="დასახელება"
+      />
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button
+      class="clear-button"
+      matTooltip="ძებნის გასუფთავება"
+      type="button"
+      (click)="clearSearchForm()"
+      mat-raised-button
+      color="warn"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+  </form>
+  <hr />
+</div>
+<div class="create-button">
+  <button (click)="createInstitutionDialog()" mat-raised-button>
+    დაწესებულების შექმნა
+  </button>
+</div>
+<mat-card>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="pid">
+      <th mat-header-cell *matHeaderCellDef>საიდენტიფიკაციო</th>
+      <td mat-cell class="linked" *matCellDef="let element">
+        {{ element.pid }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>სახელი</th>
+      <td mat-cell class="linked" *matCellDef="let element">
+        {{ element.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef>საკონტაქტო ნომერი</th>
+      <td mat-cell class="linked" *matCellDef="let element">
+        {{ element.number }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell class="linked" *matCellDef="let element">
+        <button
+          (click)="editInstitution($event, element.id)"
+          mat-icon-button
+          aria-label="Example icon button with a home icon"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="navigateToInstitution(row)"
+      class="institution-row"
+    ></tr>
+  </table>
+  <mat-paginator
+    [length]="page.total"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="pageEvent($event)"
+  >
+  </mat-paginator>
+</mat-card>

@@ -1,0 +1,9 @@
+<div class="branch" *ngIf="branch | async; let branch">
+  <mat-card>
+    <p>ფილიალის მისამართი: <b>{{ branch.address }}</b></p>
+    <p>ფილიალის მენეჯერის სახელი: <b>{{ branch.manager_name }}</b></p>
+  </mat-card>
+</div>
+<div class="create-button">
+  <button (click)="addStaff()" mat-raised-button>თანამშრომლის დამატება</button>
+</div>

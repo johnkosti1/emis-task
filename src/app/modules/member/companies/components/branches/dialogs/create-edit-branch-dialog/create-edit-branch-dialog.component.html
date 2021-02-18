@@ -1,0 +1,39 @@
+<div class="create-branch" *ngIf="branchForm">
+  <div class="header" *ngIf="data.institution | async; let institution">
+    დაწესებულება <b>{{ institution.name }}</b
+    >-ს ფილიალის შექმნა
+  </div>
+  <form [formGroup]="branchForm" class="create-branch-form">
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="ფილიალის მისამართი"
+        formControlName="address"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="მენეჯერის სახელი"
+        formControlName="manager_name"
+      />
+    </mat-form-field>
+  </form>
+  <div class="actions">
+    <button
+      (click)="submit()"
+      class="submit-button"
+      style="margin-right: 15px"
+      mat-raised-button
+    >
+      ფილიალის {{ data.id ? "რედაქტირება" : "დამატება" }}
+    </button>
+    <button (click)="closeDialog()" color="warn" mat-raised-button>
+      გაუქმება
+    </button>
+  </div>
+</div>
