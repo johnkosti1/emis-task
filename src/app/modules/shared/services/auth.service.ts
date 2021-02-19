@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 })
 export class AuthService {
   constructor(private _http: HttpClient) {}
+
   login(credentials: { userName: string; password: string }) {
     return this._http.post(
       `api/login?email=${credentials.userName}&password=${credentials.password}`,

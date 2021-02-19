@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MaterialModule } from './material/material/material.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MaterialModule } from './material/material/material.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({

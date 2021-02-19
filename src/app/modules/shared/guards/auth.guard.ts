@@ -8,7 +8,7 @@ import {
 } from '@angular/router';
 import { of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { AuthService } from '../services/Auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
