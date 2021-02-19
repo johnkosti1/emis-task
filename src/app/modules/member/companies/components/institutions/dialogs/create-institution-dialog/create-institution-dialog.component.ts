@@ -61,12 +61,8 @@ export class CreateInstitutionDialogComponent implements OnInit {
   }
   editInstitution() {
     if (this.institutionForm.dirty) {
-      const data = new FormData();
-      for (const key in this.institutionForm.value) {
-        data.append(key, this.institutionForm.value[key]);
-      }
       this._institutionsService
-        .editInstitution(this.data.id, data)
+        .editInstitution(this.data.id, this.institutionForm.value)
         .subscribe(() => {
           this.dialogRef.close('დაწესებულება წარმატებით დარედაქტირდა');
         });

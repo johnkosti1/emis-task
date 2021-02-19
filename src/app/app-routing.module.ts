@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './modules/guest/login/login.component';
+import { AuthGuard } from './modules/shared/guards/auth.guard';
+import { AuthResolver } from './modules/shared/resolvers/auth.resolver';
 
 const routes: Routes = [
   {
@@ -14,7 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'institutions',
-    // canActivate: [PermissionGuard],
+    canActivate: [AuthGuard],
+    canActivateChild:[AuthGuard],
     loadChildren: () =>
       import('./modules/member/companies/companies.module').then(
         (m) => m.CompaniesModule

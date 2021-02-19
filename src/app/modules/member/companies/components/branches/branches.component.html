@@ -1,4 +1,4 @@
-<div class="institution" *ngIf="institution | async; let institution">
+<div class="institution" *ngIf="institution">
   <mat-card>
     <p>დაწესებულების სახელი: {{ institution.name }}</p>
     <p>საიდენტიფიკაციო კოდი: {{ institution.pid }}</p>
@@ -12,7 +12,7 @@
   </button>
 </div>
 <mat-card>
-  <table mat-table [dataSource]="dataSource | async">
+  <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="address">
       <th mat-header-cell *matHeaderCellDef>ფილიალის მისამართი</th>
       <td mat-cell class="linked" *matCellDef="let element">

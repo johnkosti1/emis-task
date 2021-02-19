@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +16,18 @@ export class AuthService {
   }
   getUser() {
     return this._http.get('api/user');
+  }
+  get isLoggedIn() {
+    return this.getUser().pipe(
+      map(this._checkLogin),
+      catchError(() => of(false))
+    );
+  }
+  private _checkLogin(res): boolean {
+    if (res && res.user) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

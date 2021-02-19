@@ -18,7 +18,7 @@ import { CreateEditBranchDialogComponent } from './dialogs/create-edit-branch-di
 export class BranchesComponent implements OnInit {
   institutionId: number;
   institution: Observable<Institution>;
-  dataSource: Observable<Branch>;
+  dataSource: Branch[];
   displayedColumns: string[] = ['address', 'manager_name', 'actions'];
   page: {
     page: number;
@@ -50,7 +50,12 @@ export class BranchesComponent implements OnInit {
     );
   }
   fetchBranches() {
-    this.dataSource = this._branchService.getBranches(this.institutionId);
+    this._branchService
+      .getBranches(this.institutionId, this.page.page)
+      .subscribe((res) => {
+        this.dataSource = res.data;
+        this.page.total = res.total;
+      });
   }
   createBranchDialog() {
     const dialogRef = this._dialog.open(CreateEditBranchDialogComponent, {
@@ -87,13 +92,14 @@ export class BranchesComponent implements OnInit {
       }
     });
   }
-  pageEvent(e: PageEvent) {
-    this.page.page = e.pageIndex;
-    this.page.size = e.pageSize;
-  }
+
   navigateToCurrentBranch(branch: Branch) {
     this._router.navigate([
       `institutions/${this.institutionId}/branches/${branch.id}/personal`,
     ]);
+  }
+  pageEvent(e: PageEvent) {
+    this.page.page = e.pageIndex;
+    this.fetchBranches();
   }
 }

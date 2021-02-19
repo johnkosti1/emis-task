@@ -63,13 +63,9 @@ export class CreateEditBranchDialogComponent implements OnInit {
   }
   editBranch(): void {
     if (this.branchForm.dirty) {
-      const data = new FormData();
-      for (const key in this.branchForm.value) {
-        data.append(key, this.branchForm.value[key]);
-      }
       this.data.institution.subscribe((institution: Institution) => {
         this._branchService
-          .editBranch(this.data.id, institution.id, data)
+          .editBranch(this.data.id, institution.id, this.branchForm.value)
           .subscribe(() => {
             this.dialogRef.close('ფილიალი წარმატებით დარედაქტირდა');
           });

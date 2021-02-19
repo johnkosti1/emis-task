@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Institution } from '../../models/interfaces/institution.interface';
 import { InstitutionsService } from '../../services/institutions.service';
 import { CreateInstitutionDialogComponent } from './dialogs/create-institution-dialog/create-institution-dialog.component';
@@ -30,16 +30,19 @@ export class InstitutionsComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private _institutionsService: InstitutionsService,
     private _fb: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.fetchInstitutions();
+    this.fetchInstitutions(this.page.page);
+    // console.log(this._route.snapshot.data);
   }
 
-  fetchInstitutions(): void {
-    this._institutionsService.getInstitutions().subscribe((res: any) => {
+  fetchInstitutions(page: number): void {
+    this._institutionsService.getInstitutions(page).subscribe((res: any) => {
       this.dataSource = res.data;
+      this.page.total = res.total;
     });
   }
   createInstitutionDialog() {
@@ -54,7 +57,7 @@ export class InstitutionsComponent implements OnInit {
           duration: 2000,
           panelClass: 'green-snackbar',
         });
-        this.fetchInstitutions();
+        this.fetchInstitutions(this.page.page);
       }
     });
   }
@@ -72,13 +75,9 @@ export class InstitutionsComponent implements OnInit {
           duration: 2000,
           panelClass: 'green-snackbar',
         });
-        this.fetchInstitutions();
+        this.fetchInstitutions(this.page.page);
       }
     });
-  }
-  pageEvent(e: PageEvent) {
-    this.page.page = e.pageIndex;
-    this.page.size = e.pageSize;
   }
   initSearchForm() {
     this._fb.group({
@@ -88,9 +87,11 @@ export class InstitutionsComponent implements OnInit {
   }
   searchInstitutions({ value }): void {
     if (value.name || value.pid) {
-      this._institutionsService.getInstitutions(value).subscribe((res: any) => {
-        this.dataSource = res.data;
-      });
+      this._institutionsService
+        .getInstitutions(this.page.page, value)
+        .subscribe((res: any) => {
+          this.dataSource = res.data;
+        });
     }
   }
   clearSearchForm() {
@@ -98,9 +99,13 @@ export class InstitutionsComponent implements OnInit {
       name: '',
       pid: '',
     };
-    this.fetchInstitutions();
+    this.fetchInstitutions(this.page.page);
   }
   navigateToInstitution(institution: Institution) {
     this._router.navigate([`institutions/${institution.id}`]);
+  }
+  pageEvent(e: PageEvent) {
+    this.page.page = e.pageIndex;
+    this.fetchInstitutions(this.page.page);
   }
 }

@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../modules/shared/services/Auth.service';
 
@@ -13,19 +9,21 @@ import { AuthService } from '../../../modules/shared/services/Auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  public loginForm: FormGroup;
-  public message: string;
+  loginForm: FormGroup;
+  message: string;
   constructor(
-    // private router: Router,
+    private router: Router,
     private fb: FormBuilder,
     private authService: AuthService
   ) {
     this.initForm();
+    this.getUser();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  public login(): void {
+  login(): void {
     if (this.loginForm.invalid) {
       return;
     }
@@ -36,7 +34,7 @@ export class LoginComponent implements OnInit {
       })
       .subscribe(
         (res: any) => {
-          // this.router.navigate(['/guest/startup']);
+          this.router.navigate(['/institutions']);
           localStorage.setItem('token', res.token);
         },
         (err: any) => {
@@ -47,10 +45,18 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  private initForm(): void {
+  initForm(): void {
     this.loginForm = this.fb.group({
       userName: this.fb.control('admin@cheishvili.ge', Validators.required),
       password: this.fb.control('dsdgm31990', Validators.required),
+    });
+  }
+  getUser() {
+    this.authService.getUser().subscribe((res:any) => {
+      if(res && res.user){
+        console.log(1)
+        this.router.navigate(['/institutions']);
+      }
     });
   }
 }
