@@ -35,15 +35,17 @@ export class InstitutionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchInstitutions(this.page.page);
+    this.fetchInstitutions();
     // console.log(this._route.snapshot.data);
   }
 
-  fetchInstitutions(page: number): void {
-    this._institutionsService.getInstitutions(page).subscribe((res: any) => {
-      this.dataSource = res.data;
-      this.page.total = res.total;
-    });
+  fetchInstitutions(): void {
+    this._institutionsService
+      .getInstitutions(this.page.page)
+      .subscribe((res: any) => {
+        this.dataSource = res.data;
+        this.page.total = res.total;
+      });
   }
   createInstitutionDialog() {
     const dialogRef = this._dialog.open(CreateInstitutionDialogComponent, {
@@ -57,7 +59,7 @@ export class InstitutionsComponent implements OnInit {
           duration: 2000,
           panelClass: 'green-snackbar',
         });
-        this.fetchInstitutions(this.page.page);
+        this.fetchInstitutions();
       }
     });
   }
@@ -75,7 +77,7 @@ export class InstitutionsComponent implements OnInit {
           duration: 2000,
           panelClass: 'green-snackbar',
         });
-        this.fetchInstitutions(this.page.page);
+        this.fetchInstitutions();
       }
     });
   }
@@ -99,13 +101,13 @@ export class InstitutionsComponent implements OnInit {
       name: '',
       pid: '',
     };
-    this.fetchInstitutions(this.page.page);
+    this.fetchInstitutions();
   }
   navigateToInstitution(institution: Institution) {
     this._router.navigate([`institutions/${institution.id}`]);
   }
   pageEvent(e: PageEvent) {
     this.page.page = e.pageIndex;
-    this.fetchInstitutions(this.page.page);
+    this.fetchInstitutions();
   }
 }
