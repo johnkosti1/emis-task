@@ -53,16 +53,12 @@ export class CreateEditStaffDialogComponent implements OnInit {
     }
   }
   editStaff(): void {
-    const data = new FormData();
-    for (const key in this.staffForm.value) {
-      data.append(key, this.staffForm.value[key]);
-    }
     this._staffService
       .editStaff(
         this.data.institutionId,
         this.data.branchId,
         this.data.id,
-        data
+        this.staffForm.value
       )
       .subscribe(() => {
         this.dialogRef.close('თანამშრომელი წარმატებით დარედაქტირდა');

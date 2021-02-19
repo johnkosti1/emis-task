@@ -41,14 +41,14 @@ export class CreateInstitutionDialogComponent implements OnInit {
       ),
     });
   }
-  submit() {
+  submit(): void {
     if (this.data && this.data.id) {
       this.editInstitution();
     } else {
       this.createInstitution();
     }
   }
-  createInstitution() {
+  createInstitution(): void {
     if (this.institutionForm.valid) {
       const data = new FormData();
       for (const key in this.institutionForm.value) {
@@ -59,7 +59,7 @@ export class CreateInstitutionDialogComponent implements OnInit {
       });
     }
   }
-  editInstitution() {
+  editInstitution(): void {
     if (this.institutionForm.dirty) {
       this._institutionsService
         .editInstitution(this.data.id, this.institutionForm.value)
@@ -68,7 +68,7 @@ export class CreateInstitutionDialogComponent implements OnInit {
         });
     }
   }
-  fetchInstitution() {
+  fetchInstitution(): void {
     this._institutionsService.getInstitution(this.data.id).subscribe((res) => {
       this.initForm(res);
     });

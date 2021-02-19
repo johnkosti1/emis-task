@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DevResponse } from '../models/classes/list.response';
 import { Staff } from '../models/interfaces/staff.interface';
 
 @Injectable({
@@ -27,20 +28,24 @@ export class StaffService {
       `api/institutions/${institutionId}/branches/${branchId}/personal/${staffId}`
     );
   }
-  getStaffList(institutionId: number, branchId: number) {
-    return this._http.get(
-      `api/institutions/${institutionId}/branches/${branchId}/personal `
+  getStaffList(
+    institutionId: number,
+    branchId: number,
+    page: number
+  ): Observable<DevResponse<Staff[]>> {
+    return this._http.get<DevResponse<Staff[]>>(
+      `api/institutions/${institutionId}/branches/${branchId}/personal?page=${page+1} `
     );
   }
   editStaff(
     institutionId: number,
     branchId: number,
     staffId: number,
-    data: FormData
+    data: { pid: number; name: string }
   ): Observable<Staff> {
     return this._http.put<Staff>(
-      `api/institutions/${institutionId}/branches/${branchId}/personal/${staffId}`,
-      data
+      `api/institutions/${institutionId}/branches/${branchId}/personal/${staffId}?name=${data.name}&pid=${data.pid}`,
+      {}
     );
   }
 }

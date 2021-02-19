@@ -1,8 +1,8 @@
-<div class="institution" *ngIf="institution">
+<div class="institution" *ngIf="institution | async; let institution">
   <mat-card>
-    <p>დაწესებულების სახელი: {{ institution.name }}</p>
-    <p>საიდენტიფიკაციო კოდი: {{ institution.pid }}</p>
-    <p>საკონტაქტო ნომერი: {{ institution.number }}</p>
+    <p>დაწესებულების სახელი: <b>{{ institution.name }}</b></p>
+    <p>საიდენტიფიკაციო კოდი: <b>{{ institution.pid }}</b></p>
+    <p>საკონტაქტო ნომერი: <b>{{ institution.number }}</b></p>
   </mat-card>
 </div>
 <hr />
@@ -33,7 +33,6 @@
         <button
           (click)="editBrancheDialog($event, element.id)"
           mat-icon-button
-          aria-label="Example icon button with a home icon"
         >
           <mat-icon>edit</mat-icon>
         </button>
