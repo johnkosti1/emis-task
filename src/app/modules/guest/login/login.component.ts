@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
   getUser() {
     this.authService.getUser().subscribe((res:any) => {
       if(res && res.user){
-        console.log(1)
         this.router.navigate(['/institutions']);
       }
     });
